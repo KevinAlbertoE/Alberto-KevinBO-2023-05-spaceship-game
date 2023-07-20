@@ -14,7 +14,8 @@ class Spaceship(Sprite):
         self.image = SPACESHIP
         self.image = pygame.transform.scale(self.image, (self.IMAGE_WIDTH, self.IMAGE_HEIGTH))
         self.rect = self.image.get_rect(midbottom = (self.SPACESHIP_POS_X, self.SPACESHIP_POS_Y))
-
+        self.type = 'player' 
+        
     def update(self, user_input):
         if user_input[pygame.K_LEFT]: #and self.rect.left > 0:
             self.rect.x -= 10
