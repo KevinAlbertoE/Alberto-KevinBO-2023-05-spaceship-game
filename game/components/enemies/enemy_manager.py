@@ -26,6 +26,8 @@ class EnemyManager:
 
             enemy = Enemy(image, speed_on_x, speed_on_y)
             self.enemies.append(enemy)
-
+    def delete_enemy(self):
+        for enemy in self.enemies:
+            self.enemies.remove(enemy)
 
           

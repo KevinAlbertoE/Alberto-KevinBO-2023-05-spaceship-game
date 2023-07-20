@@ -4,6 +4,8 @@ from pygame.sprite import Sprite
 
 from game.utils.constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from game.components.bullets.bullet import Bullet
+#from game.components.spaceship import Spaceship
+
 
 class Enemy(Sprite):
     ENEMY_WIDTH = 40
@@ -44,11 +46,13 @@ class Enemy(Sprite):
         
         elif self.direction == self.MOVES[2]:
             self.rect.y += self.SPEED_ON_Y
+    #    if self.image.colliderect(Bullet) and Bullet.owner ==  Spaceship.type:
+     #       game.bullet_manager.remove(Bullet)
+
 
         self.handle_direction()
         if self.rect.top > SCREEN_HEIGHT or self.rect.bottom < 0:
             enemies.remove(self)
-
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
@@ -72,6 +76,6 @@ class Enemy(Sprite):
         current_time = pygame.time.get_ticks()
 
         if self.shooting_time <= current_time:
-            bullet = Bullet(self)
+            bullet = Bullet(self)#crear una bala para simismo
             bullet_manager.add_bullet(bullet)
             self.shooting_time += random.randint(self.INITIAL_SHOOTING_TIME, self.FINAL_SHOOTING_TIME)        
