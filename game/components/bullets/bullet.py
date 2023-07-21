@@ -18,23 +18,24 @@ class Bullet(Sprite):
         self.owner = spaceship.type# devuelve texto (enemy or player)
 
     def update(self, bullets):
-        if self.owner == 'enemy':
-            self.rect.y += 10
+        if self.owner == 'player':
+            self.rect.y -= 10
             
         else:
-             self.owner == 'player'
-             self.rect.y -= 10  
+            # self.owner == 'player'
+             self.rect.y += 10  
              #if self.rect.colliderect(Enemy.rect):
-              #  EnemyManager.delete_enemy()
+              #  EnemyManager.delete_enemy()#
                    
 
         # aqui hay que poner una condicional para que el movimiento varie de ariba a abajo
         #self.rect.y += 10# bullets es una lista entonces en donde le pasamos la lista tenemos que añadir una condicional para ver que lista enviamos
-
-        if self.rect.top > SCREEN_HEIGHT: #añadir condicional para eliminar si es que la bala del player es < o se elimine
+        if self.rect.top < 0 or self.rect.centery > SCREEN_HEIGHT:
+        #if self.rect.top > SCREEN_HEIGHT: #añadir condicional para eliminar si es que la bala del player es < o se elimine
             bullets.remove(self)
         elif self.rect.top < 0:
             bullets.remove(self)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        #

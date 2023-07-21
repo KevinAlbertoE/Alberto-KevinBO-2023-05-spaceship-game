@@ -12,8 +12,8 @@ class Enemy(Sprite):
     ENEMY_HEIGHT = 60
     Y_POS = 0
     X_POS_RANGE = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
-    SPEED_ON_Y = 1
-    SPEED_ON_X = 10
+   # SPEED_ON_Y = 1
+    #SPEED_ON_X = 10
     MOVES = { 0: 'left', 1: 'right', 2: 'down'}
     INITIAL_SHOOTING_TIME = 1000
     FINAL_SHOOTING_TIME = 3000
@@ -36,22 +36,22 @@ class Enemy(Sprite):
         self.shoot(game.bullet_manager)
 
         if self.direction == self.MOVES[0]:
-            self.rect.y += self.SPEED_ON_Y
-            self.rect.x -= self.SPEED_ON_X
+            self.rect.y += self.speed_on_y
+            self.rect.x -= self.speed_on_x
 
 
         elif self.direction == self.MOVES[1]:
-            self.rect.x += self.SPEED_ON_X
-            self.rect.y += self.SPEED_ON_Y
+            self.rect.x += self.speed_on_x
+            self.rect.y += self.speed_on_y
         
         elif self.direction == self.MOVES[2]:
-            self.rect.y += self.SPEED_ON_Y
+            self.rect.y += self.speed_on_y
     #    if self.image.colliderect(Bullet) and Bullet.owner ==  Spaceship.type:
      #       game.bullet_manager.remove(Bullet)
 
 
         self.handle_direction()
-        if self.rect.top > SCREEN_HEIGHT or self.rect.bottom < 0:
+        if self.rect.top > SCREEN_HEIGHT: #or self.rect.bottom < 0:
             enemies.remove(self)
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -61,13 +61,13 @@ class Enemy(Sprite):
 
         if (self.movement_count >= self.moves_before_change and self.direction == self.MOVES[1]) or self.rect.right >= SCREEN_WIDTH:
             self.direction = self.MOVES[0]
-            self.SPEED_ON_Y += 1
+            self.speed_on_y += 1
         elif self.movement_count >= self.moves_before_change and self.direction == self.MOVES[0] or self.rect.left <= 0:
             self.direction = self.MOVES[1]
         elif self.movement_count >= self.moves_before_change and self.direction == self.MOVES[2]:
-            self.SPEED_ON_Y += 10
+            self.speed_on_y += 10
             if self.rect.bottom > SCREEN_HEIGHT / 2:
-                self.SPEED_ON_Y = -5
+                self.speed_on_y = -5
                 self.direction = self.MOVES[0]                
         if (self.movement_count >= self.moves_before_change):
             self.movement_count = 0
