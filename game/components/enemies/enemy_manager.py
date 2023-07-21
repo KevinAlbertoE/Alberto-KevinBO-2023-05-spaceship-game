@@ -19,15 +19,14 @@ class EnemyManager:
             enemy.draw(screen)
 
     def add_enemy(self):
-        if len(self.enemies) < 2:
+        if len(self.enemies) < 3:
             image = random.choice(self.enemy_images)
             speed_on_x = random.randint(10, 20)
             speed_on_y = random.randint(1, 5)
 
             enemy = Enemy(image, speed_on_x, speed_on_y)
             self.enemies.append(enemy)
-
+        
     def reset(self):
         self.enemies = []
           
-#

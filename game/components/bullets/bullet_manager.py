@@ -19,10 +19,10 @@ class BulletManager:
             bullet.update(self.player_bullets)
 
             for enemy in game.enemy_manager.enemies:
-                if bullet.rect.colliderect(enemy.rect):
+                if bullet.rect.colliderect(enemy.rect) and enemy in game.enemy_manager.enemies:
                     game.enemy_manager.enemies.remove(enemy)
                     self.player_bullets.remove(bullet)
-                    game.increase_score()
+                    game.score.increase_score()
                     
     def draw(self, screen):
         for bullet in self.enemy_bullets:

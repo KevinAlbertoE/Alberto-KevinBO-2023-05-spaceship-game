@@ -34,30 +34,20 @@ class Spaceship(Sprite):
     def move_right(self):
         self.rect.x += 10
         if self.rect.right >= SCREEN_WIDTH:
-            self.rect.left = -self.SPACESHIP_WIDTH
+            self.rect.left = SCREEN_WIDTH - SCREEN_WIDTH
+
     
     def move_left(self):
         self.rect.x -= 10
         if self.rect.left <= 0:
-            self.rect.right = SCREEN_WIDTH + self.SPACESHIP_WIDTH
+            self.rect.right = SCREEN_WIDTH
     def shoot(self, bullet_manager):
         bullet = Bullet(self)
         bullet_manager.add_bullet(bullet)
         
   #  def update(self, game, user_input):
-      #  self.shoot(game.bullet_manager, user_input)
-       # if user_input[pygame.K_LEFT]: #and self.rect.left > 0:
-        #    self.rect.x -= 10
-         #   if self.rect.left < 0:
-          #      self.rect.right = SCREEN_WIDTH  
-#        elif user_input[pygame.K_RIGHT]:# and self.rect.right < SCREEN_WIDTH:
- #           self.rect.x += 10
-  #          if self.rect.right > SCREEN_WIDTH:
-   #             self.rect.left = SCREEN_WIDTH - SCREEN_WIDTH
-    #    elif user_input[pygame.K_UP] and self.rect.top > 200: 
-     #       self.rect.y -= 10
-#        elif user_input[pygame.K_DOWN] and self.rect.bottom < SCREEN_HEIGHT:
- #           self.rect.y += 10
+ 
+
 #        elif user_input[pygame.K_q] and self.rect.y > 200:
  #           self.rect.x -= 10
   #          self.rect.y -= 10
@@ -85,3 +75,5 @@ class Spaceship(Sprite):
  #       if user_input[pygame.K_v]:
   #          bullet = Bullet(self) # el parametro de spaceship que se pide en la clase lo enviamos aqui
    #         bullet_manager.add_bullet(bullet)
+    def reset(self):
+        self.rect = self.image.get_rect(midbottom = (self.SPACESHIP_POS_X, self.SPACESHIP_POS_Y))

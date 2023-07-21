@@ -3,6 +3,7 @@ import pygame
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
+from game.components.score import Score
 from game.components.bullets.bullet_manager import BulletManager 
 from game.components.menu import Menu
 
@@ -15,7 +16,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.playing = False
         self.running = False
-        self.score = False
+        #self.score = False
+        self.score = Score()
         self.game_speed = 10
         self.x_pos_bg = 0
         self.y_pos_bg = 0
@@ -33,9 +35,12 @@ class Game:
         pygame.quit()
 
     def run(self):
-        self.score = 0
+        #self.score = 0
         self.bullet_manager.reset()
         self.enemy_manager.reset()
+        self.player.reset()
+        self.score.reset()
+
         # Game loop: events - update - draw
         self.playing = True
         while self.playing:
@@ -64,7 +69,7 @@ class Game:
         self.player.draw(self.screen)
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
-        self.draw_score()
+        self.score.draw_score(self)
         #self.enemies.draw(self.screen)
         pygame.display.update()
         #pygame.display.flip()
@@ -84,10 +89,11 @@ class Game:
         self.menu.update(self)
 
         self.menu.reset_screen(self.screen)
+    
 
         if self.death_counter > 0:
-            self.menu.update_message('Game Over')
-
+            self.menu.update_message('Game Over: press any key to restart')
+            self.score.draw_score_menu(self)
             icon = pygame.transform.scale((ICON), (80, 120))
             self.screen.blit(icon, ((SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 150))
 
@@ -97,11 +103,11 @@ class Game:
     def increase_death_counter(self):
         self.death_counter += 1
 
-    def increase_score(self):
-        self.score += 1
+   # def increase_score(self):
+    #    self.score += 1
 
-    def draw_score(self):
-        font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Score: {self.score}', False, 'White')
-        text_rect = text.get_rect(topright = (SCREEN_WIDTH - 30, 30))
-        self.screen.blit(text, text_rect)
+    #def draw_score(self):
+     #   font = pygame.font.Font(FONT_STYLE, 30)
+      #  text = font.render(f'Score: {self.score}', False, 'White')
+       # text_rect = text.get_rect(topright = (SCREEN_WIDTH - 30, 30))
+        #self.screen.blit(text, text_rect)

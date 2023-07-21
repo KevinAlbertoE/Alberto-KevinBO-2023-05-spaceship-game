@@ -51,7 +51,7 @@ class Enemy(Sprite):
 
 
         self.handle_direction()
-        if self.rect.top > SCREEN_HEIGHT: #or self.rect.bottom < 0:
+        if self.rect.top > SCREEN_HEIGHT or self.rect.bottom < 0:
             enemies.remove(self)
     def draw(self, screen):
         screen.blit(self.image, self.rect)
