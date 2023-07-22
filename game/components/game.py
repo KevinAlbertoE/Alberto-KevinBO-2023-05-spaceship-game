@@ -1,11 +1,12 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, FONT_STYLE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.score import Score
 from game.components.bullets.bullet_manager import BulletManager 
 from game.components.menu import Menu
+from game.components.power_ups.power_up_manager import PowerUpManager
 
 class Game:
     def __init__(self):
@@ -16,7 +17,6 @@ class Game:
         self.clock = pygame.time.Clock()
         self.playing = False
         self.running = False
-        #self.score = False
         self.score = Score()
         self.game_speed = 10
         self.x_pos_bg = 0
@@ -26,6 +26,7 @@ class Game:
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
         self.menu = Menu(self.screen, 'Press any button to start')
+        self.power_up_manager = PowerUpManager()
 
     def execute(self):
         self.running = True
@@ -35,7 +36,7 @@ class Game:
         pygame.quit()
 
     def run(self):
-        #self.score = 0
+
         self.bullet_manager.reset()
         self.enemy_manager.reset()
         self.player.reset()
@@ -60,7 +61,7 @@ class Game:
         self.player.update(user_input, self)
         self.enemy_manager.update(self)
         self.bullet_manager.update(self)
-        #self.enemies.update()
+        self.power_up_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
@@ -69,7 +70,9 @@ class Game:
         self.player.draw(self.screen)
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
-        self.score.draw_score(self)
+        self.power_up_manager.draw(self.screen)
+        self.draw_power_up_time()
+        self.score.draw_score(self.screen, f"Score: {self.score.score}", (SCREEN_WIDTH - 70), 37, "White", 30)
         #self.enemies.draw(self.screen)
         pygame.display.update()
         #pygame.display.flip()
@@ -93,7 +96,9 @@ class Game:
 
         if self.death_counter > 0:
             self.menu.update_message('Game Over: press any key to restart')
-            self.score.draw_score_menu(self)
+            self.score.draw_score(self.screen, f'YOUR SCORE: {self.score.score}', (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2 + 30), "Black", 20)
+            self.score.draw_score(self.screen, f"HIGHEST SCORE: {max(self.score.list_score)}", (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2 + 60), "Black", 20)
+            self.score.draw_score(self.screen, f"TOTAL DEATHS:{self.death_counter}", (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2 + 90), "Black", 20)
             icon = pygame.transform.scale((ICON), (80, 120))
             self.screen.blit(icon, ((SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 150))
 
@@ -103,11 +108,17 @@ class Game:
     def increase_death_counter(self):
         self.death_counter += 1
 
-   # def increase_score(self):
-    #    self.score += 1
+    def draw_power_up_time(self):
+        if self.player.has_power_up:
+            time_to_show = round((self.player.power_up_time_up - pygame.time.get_ticks()) / 1000, 2)
 
-    #def draw_score(self):
-     #   font = pygame.font.Font(FONT_STYLE, 30)
-      #  text = font.render(f'Score: {self.score}', False, 'White')
-       # text_rect = text.get_rect(topright = (SCREEN_WIDTH - 30, 30))
-        #self.screen.blit(text, text_rect)
+            if time_to_show >= 0:
+                self.score.draw_score(self.screen, f'{self.player.power_up_type} is enabled for {time_to_show}', (SCREEN_WIDTH / 2), 50, "White", 20)
+                #font = pygame.font.Font(FONT_STYLE, 30)
+                #text = font.render(f'{self.player.power_up_type.capitalize()} is enabled for {time_to_show}', False, 'White')
+                #text_rect = text.get_rect(center = (SCREEN_WIDTH / 2, 50))
+                #self.screen.blit(text, text_rect)
+            else:
+                self.player.has_power_up = False
+                self.player.power_up_type = DEFAULT_TYPE
+                self.player.set_image()  
