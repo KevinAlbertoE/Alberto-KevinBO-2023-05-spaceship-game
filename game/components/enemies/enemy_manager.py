@@ -1,7 +1,8 @@
 import random
+import pygame
 
 from game.components.enemies.enemy import Enemy
-from game.utils.constants import ENEMY_1, ENEMY_2, ENEMY_3
+from game.utils.constants import ENEMY_1, ENEMY_2, ENEMY_3, DEFAULT_TYPE, HEART_TYPE, OBLIQUE_TYPE
 
 class EnemyManager:   
     def __init__(self):
@@ -13,7 +14,15 @@ class EnemyManager:
 
         for enemy in self.enemies:
             enemy.update(self.enemies, game)
-
+            if enemy.rect.colliderect(game.player):
+                if game.player.power_up_type == DEFAULT_TYPE:
+                    game.increase_death_counter()
+                    game.playing = False
+                    pygame.time.delay(500)
+                    break
+                if game.player.power_up_type == HEART_TYPE or OBLIQUE_TYPE:
+                    game.player.hit += 10000
+                    self.enemies.remove(enemy)
     def draw(self, screen):
         for enemy in self.enemies:
             enemy.draw(screen)

@@ -3,19 +3,15 @@ from game.utils.constants import FONT_STYLE
 class Score:
     def __init__(self):
         self.score = 0
-        self.list_score = []
-        self.list_highest_score = []
 
     def increase_score(self):
-        self.score += 1 
-        self.list_score.append(self.score)
+        self.score += 1       
 
-       
-
-    def draw_score(self, screen, message, pos_x, pos_y, color, size ):
+    def draw_score(self, screen, message, pos_x, pos_y, color, size):
         font = pygame.font.Font(FONT_STYLE, size)
         text = font.render(message, False, color)
-        text_rect = text.get_rect(center = (pos_x, pos_y))
+        text_rect = text.get_rect(midleft = (pos_x, pos_y))
+
         screen.blit(text, text_rect)
         
 #    def draw_score_menu(self, game):
@@ -30,6 +26,9 @@ class Score:
  #       game.screen.blit(text_highest_score, text_rect_highest_score)
 #        game.screen.blit(text_your_score, text_rect_your_score)
   #      game.screen.blit(text_death, text_rect_death)
+    def set_value(self, value):
+        self.score = value
+    
     def reset(self):
             self.score = 0
  

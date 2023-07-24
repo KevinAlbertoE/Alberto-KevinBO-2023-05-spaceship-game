@@ -16,12 +16,17 @@ SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
-
+HEART_RED = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeartRed.png'))
+OBLIQUE = pygame.image.load(os.path.join(IMG_DIR, 'Other/ObliqueMovement.png'))
+OBLIQUE_TYPE = "oblique"
+HEART_TYPE = "heart"
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
-
+SPACESHIP_HEART = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_heart.png"))
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))
+SPACESHIP_OBLIQUE = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_oblique.png"))
+SPACESHIP_EXPLOSION = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/Explosion.png"))
 BULLET = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_1.png"))
 
 BULLET_ENEMY = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_2.png"))

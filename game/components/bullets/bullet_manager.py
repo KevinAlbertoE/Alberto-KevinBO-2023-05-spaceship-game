@@ -1,5 +1,5 @@
 import pygame
-from game.utils.constants import SHIELD_TYPE
+from game.utils.constants import SHIELD_TYPE, DEFAULT_TYPE, HEART_TYPE, OBLIQUE_TYPE
 
 class BulletManager:
     def __init__(self):
@@ -11,12 +11,14 @@ class BulletManager:
             bullet.update(self.enemy_bullets)
 
             if bullet.rect.colliderect(game.player) and bullet.owner == 'enemy':
-                if game.player.power_up_type != SHIELD_TYPE:
+                if game.player.power_up_type == DEFAULT_TYPE:
                     game.increase_death_counter()
                     game.playing = False
                     pygame.time.delay(500)
                     break
-
+                if game.player.power_up_type == HEART_TYPE or OBLIQUE_TYPE:
+                    game.player.hit += 10000
+                    self.enemy_bullets.remove(bullet)
         for bullet in self.player_bullets:
             bullet.update(self.player_bullets)
 
